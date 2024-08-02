@@ -30,7 +30,7 @@ export default function RegistrationForm() {
           </Item>
         </Grid>
         <Grid item xs={6}>
-          <Item sx={{textAlign:"left"}}><LeftUpperComp/></Item>
+          <Item sx={{display:"flex",justifyContent:"left"}}><LeftUpperComp/></Item>
         </Grid>
         <Grid item xs={6}>
           <Item>xs=4</Item>
