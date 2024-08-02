@@ -93,7 +93,7 @@ export default function LeftUpperComp() {
               aria-controls="panel1-content"
               id="panel1-header"
             >
-              Secretary
+              President
             </AccordionSummary>
             <AccordionDetails
               component={Box}
@@ -190,7 +190,7 @@ export default function LeftUpperComp() {
               aria-controls="panel1-content"
               id="panel1-header"
             >
-              President
+              Secretary
             </AccordionSummary>
             <AccordionDetails
               component={Box}
