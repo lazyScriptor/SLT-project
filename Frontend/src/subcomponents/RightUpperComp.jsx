@@ -1,11 +1,17 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import React from "react";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import LocalImage from "../assets/white-btn.webp";
 
 function RightUpperComp() {
   return (
-    <Box display={"flex"} flexDirection={"column"} justifyContent={"start"} gap={2}>
+    <Box
+
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent={"start"}
+      gap={2}
+    >
       <Typography variant="body1" align="center">
         INSTRUCTIONS
       </Typography>
@@ -26,8 +32,11 @@ function RightUpperComp() {
         Select the established date of the trade union by date picker{" "}
       </Typography>
 
-      <img src={LocalImage} alt="Local illustration" style={{width:"300px"}}/>
-
+      <img
+        src={LocalImage}
+        alt="Local illustration"
+        style={{ width: "300px" }}
+      />
     </Box>
   );
 }

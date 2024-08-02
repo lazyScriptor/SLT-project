@@ -36,7 +36,7 @@ export default function RegistrationForm() {
           </Item>
         </Grid>
         <Grid item xs={12} md={12} lg={6}>
-          <Item>
+          <Item elevation={0}>
             <RightUpperComp />
           </Item>
         </Grid>

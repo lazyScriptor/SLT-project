@@ -35,11 +35,30 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function LeftUpperComp({ existingUsernames = [''] }) {
+export default function LeftUpperComp({ existingUsernames = [""] }) {
+  const phoneNumberValidation = yup
+    .string()
+    .required("Phone number is required")
+    .matches(/^\d+$/, "Phone number must contain only digits")
+    .test("phone-number-validation", function (value) {
+      if (!value) return false;
+      if (value.startsWith("0")) {
+        if (value.length !== 10) {
+          return this.createError({ message: `Enter a valid phone number` });
+        }
+      } else {
+        if (value.length !== 9) {
+          return this.createError({ message: "Enter a valid phone number" });
+        }
+      }
+      return true;
+    });
+
   const schema = yup.object().shape({
     name: yup.string().required("Name is required"),
+    name2: yup.string().required("Name is required"),
     userRole: yup.array().min(1, "At least one role must be selected"),
-   
+
     nic: yup
       .string()
       .required()
@@ -83,29 +102,13 @@ export default function LeftUpperComp({ existingUsernames = [''] }) {
         const domainExtension = domainPart.split(".").pop();
         return validDomains.includes(domainExtension);
       }),
-    phonenumber: yup
-      .string()
-      .required("Phone number is required")
-      .matches(/^\d+$/, "Phone number must contain only digits")
-      .test("phone-number-validation", function (value) {
-        if (!value) return false; // In case the value is undefined or null, required will handle this case
-        if (value.startsWith("0")) {
-          if (value.length !== 10) {
-            return this.createError({
-              message: `Enter a valid phone number`,
-            });
-          }
-        } else {
-          if (value.length !== 9) {
-            return this.createError({
-              message: "Enter a valid phone number",
-            });
-          }
-        }
-        return true;
-      }),
+    phoneNumbers: yup.object().shape({
+      phoneNumber1: phoneNumberValidation,
+      phoneNumber2: phoneNumberValidation,
+      phoneNumber3: phoneNumberValidation,
+      phoneNumber4: phoneNumberValidation,
+    }),
     address: yup.string().required("Address is required"),
-    
   });
 
   const {
@@ -150,7 +153,7 @@ export default function LeftUpperComp({ existingUsernames = [''] }) {
         <Typography variant="caption" align="left">
           To:The Register Of Trade Unions Colombo
         </Typography>
-    
+
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box gap={2} display={"flex"} flexDirection={"column"}>
             <FormLabel align="left">Name of the Trade Union</FormLabel>
@@ -162,7 +165,7 @@ export default function LeftUpperComp({ existingUsernames = [''] }) {
               error={!!errors.username}
               helperText={errors.username?.message}
             />
-    
+
             <FormLabel align="left">Address</FormLabel>
             <TextField
               id="outlined-size-small"
@@ -181,7 +184,7 @@ export default function LeftUpperComp({ existingUsernames = [''] }) {
             </LocalizationProvider>
           </Box>
           {/* Accordian starting from here -Accordian 1*/}
-          <Accordion >
+          <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1-content"
@@ -203,6 +206,7 @@ export default function LeftUpperComp({ existingUsernames = [''] }) {
                 id="outlined-size-small"
                 placeholder="Enter name of president"
                 size="small"
+                name="presidentName"
                 inputProps={{ ...register("name") }}
                 error={!!errors.name}
                 helperText={errors.name?.message}
@@ -242,9 +246,9 @@ export default function LeftUpperComp({ existingUsernames = [''] }) {
                       id="outlined-size-small"
                       placeholder="Enter Whatsapp number"
                       size="small"
-                      inputProps={{ ...register("phonenumber") }}
-                      error={!!errors.phonenumber}
-                      helperText={errors.phonenumber?.message}
+                      {...register("phoneNumbers.phoneNumber1")}
+                      error={!!errors.phoneNumbers?.phoneNumber1}
+                      helperText={errors.phoneNumbers?.phoneNumber1?.message}
                     />
                   </Item>
                 </Grid>
@@ -263,9 +267,9 @@ export default function LeftUpperComp({ existingUsernames = [''] }) {
                       id="outlined-size-small"
                       placeholder="Enter contact number"
                       size="small"
-                      inputProps={{ ...register("phonenumber") }}
-                      error={!!errors.phonenumber}
-                      helperText={errors.phonenumber?.message}
+                      {...register("phoneNumbers.phoneNumber2")}
+                      error={!!errors.phoneNumbers?.phoneNumber2}
+                      helperText={errors.phoneNumbers?.phoneNumber2?.message}
                     />
                   </Item>
                 </Grid>
@@ -313,12 +317,12 @@ export default function LeftUpperComp({ existingUsernames = [''] }) {
             >
               <FormLabel align="left">Name</FormLabel>
               <TextField
-                id="outlined-size-small"
+                name="secretaryName"
                 placeholder="Enter name of president"
                 size="small"
-                inputProps={{ ...register("name") }}
-                error={!!errors.name}
-                helperText={errors.name?.message}
+                inputProps={{ ...register("name2") }}
+                error={!!errors.name2}
+                helperText={errors.name2?.message}
               />
               <Grid container spacing={2}>
                 <Grid item xs={6}>
@@ -355,9 +359,9 @@ export default function LeftUpperComp({ existingUsernames = [''] }) {
                       id="outlined-size-small"
                       placeholder="Enter Whatsapp number"
                       size="small"
-                      inputProps={{ ...register("phonenumber") }}
-                      error={!!errors.phonenumber}
-                      helperText={errors.phonenumber?.message}
+                      {...register("phoneNumbers.phoneNumber3")}
+                      error={!!errors.phoneNumbers?.phoneNumber3}
+                      helperText={errors.phoneNumbers?.phoneNumber3?.message}
                     />
                   </Item>
                 </Grid>
@@ -376,9 +380,9 @@ export default function LeftUpperComp({ existingUsernames = [''] }) {
                       id="outlined-size-small"
                       placeholder="Enter contact number"
                       size="small"
-                      inputProps={{ ...register("phonenumber") }}
-                      error={!!errors.phonenumber}
-                      helperText={errors.phonenumber?.message}
+                      {...register("phoneNumbers.phoneNumber4")}
+                      error={!!errors.phoneNumbers?.phoneNumber4}
+                      helperText={errors.phoneNumbers?.phoneNumber4?.message}
                     />
                   </Item>
                 </Grid>
