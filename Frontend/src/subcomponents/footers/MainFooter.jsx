@@ -145,7 +145,7 @@ function MainFooter() {
           }}
         >
           <img src={sltQr} width={"100px"} alt="QR Code" />
-          <Button
+          <Button 
             sx={{ border: "solid 1px", borderRadius: "10%", color: "orange" }}
           >
             <RingVolumeIcon />

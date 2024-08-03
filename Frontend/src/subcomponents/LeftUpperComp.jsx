@@ -612,8 +612,9 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
               variant="contained"
               color="primary"
               type="submit"
-              // onClick={handleFileUpload}
-              // disabled={!file}
+              onClick={handleFileUpload}
+              disabled={!file}
+              
             >
               Submit
             </Button>
