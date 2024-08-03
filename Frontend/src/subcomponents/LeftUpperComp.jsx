@@ -259,11 +259,11 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
             />
             {nameVisibility &&
               (nameState ? (
-                <Typography variant="caption" color={"error"}>
+                <Typography variant="caption" color={"error"} align="left">
                   Trade union name is not available
                 </Typography>
               ) : (
-                <Typography variant="caption" color={"green"}>
+                <Typography variant="caption" color={"green"} align="left">
                   Trade union name is available
                 </Typography>
               ))}
@@ -342,6 +342,7 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <Item
+                    elevation={0}
                     sx={{
                       display: "flex",
                       justifyContent: "left",
@@ -363,6 +364,7 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
                 </Grid>
                 <Grid item xs={6}>
                   <Item
+                    elevation={0}
                     sx={{
                       display: "flex",
                       justifyContent: "left",
@@ -384,6 +386,7 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <Item
+                    elevation={0}
                     sx={{
                       display: "flex",
                       justifyContent: "left",
@@ -403,6 +406,7 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
                 </Grid>
                 <Grid item xs={6}>
                   <Item
+                    elevation={0}
                     sx={{
                       display: "flex",
                       justifyContent: "left",
@@ -465,6 +469,7 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <Item
+                    elevation={0}
                     sx={{
                       display: "flex",
                       justifyContent: "left",
@@ -486,6 +491,7 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
                 </Grid>
                 <Grid item xs={6}>
                   <Item
+                    elevation={0}
                     sx={{
                       display: "flex",
                       justifyContent: "left",
@@ -507,6 +513,7 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <Item
+                    elevation={0}
                     sx={{
                       display: "flex",
                       justifyContent: "left",
@@ -526,6 +533,7 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
                 </Grid>
                 <Grid item xs={6}>
                   <Item
+                    elevation={0}
                     sx={{
                       display: "flex",
                       justifyContent: "left",
@@ -599,7 +607,7 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
               />
             </AccordionDetails>
           </Accordion>
-          <Box display={"flex"} justifyContent={"left"}>
+          <Box display={"flex"} justifyContent={"left"} sx={{mt:4}}>
             <Button
               variant="contained"
               color="primary"
