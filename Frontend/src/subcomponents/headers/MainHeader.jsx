@@ -5,11 +5,11 @@ import SecondHeader from "./SecondHeader";
 
 function MainHeader() {
   return (
-    <div>
+    <>
       <TopHeader />
       <SecondHeader />
       <TradeUnionTextHeader />
-    </div>
+    </>
   );
 }
 

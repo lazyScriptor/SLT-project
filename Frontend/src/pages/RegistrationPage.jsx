@@ -8,6 +8,7 @@ import LeftUpperComp from "../subcomponents/LeftUpperComp";
 import RightUpperComp from "../subcomponents/RightUpperComp";
 
 import MainHeader from "../subcomponents/headers/MainHeader";
+import MainFooter from "../subcomponents/footers/MainFooter";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -55,6 +56,16 @@ export default function RegistrationForm() {
             </Item>
           </Grid>
         </Grid>
+      </Box>
+      <Box
+        display={"flex"}
+        flexDirection={"column"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        width={"100vw"}
+        height={"40vh"}
+      >
+        <MainFooter />
       </Box>
     </Box>
   );
