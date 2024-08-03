@@ -10,6 +10,8 @@ function MainFooter() {
       sx={{
         height: "auto",
         mt: 20,
+        pt:5,
+        pb:8,
         width: "100%",
         display: "flex",
         justifyContent: "center",
@@ -65,7 +67,17 @@ function MainFooter() {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2} sx={{ textAlign: "left" }}>
-          <Typography variant="h6" color="white" gutterBottom>
+          <Typography
+            variant="h6"
+            color="white"
+            gutterBottom
+            sx={{
+              backgroundColor: "#9e9e9e30",
+              padding: "8px",
+              borderLeft: "2px solid #9e9e9e", // Add a left border
+              borderRadius: "0px 10px 0px 10px",
+            }}
+          >
             Related Links
           </Typography>
           <Typography variant="caption" color="#bebebe">
@@ -87,7 +99,17 @@ function MainFooter() {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6} md={4} lg={2} sx={{ textAlign: "left" }}>
-          <Typography variant="h6" color="white" gutterBottom>
+          <Typography
+            variant="h6"
+            color="white"
+            gutterBottom
+            sx={{
+              backgroundColor: "#9e9e9e30",
+              padding: "8px",
+              borderLeft: "2px solid #9e9e9e", // Add a left border
+              borderRadius: "0px 10px 0px 10px",
+            }}
+          >
             Quick Links
           </Typography>
           <Typography variant="caption" color="#bebebe">

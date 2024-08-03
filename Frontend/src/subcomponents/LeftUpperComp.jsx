@@ -20,7 +20,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -39,7 +39,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
   const [nameState, setNameState] = useState(false);
   const [nameVisibility, setNameVisibility] = useState(false);
-  //created a seperate yup to use at 4 phonenumber fields
+  //created a seperate yup to use at 4 phonenumber validations at once
   const phoneNumberValidation = yup
     .string()
     .required("Phone number is required")
@@ -99,7 +99,7 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
       .test("is-valid-domain", "Email domain must be valid", (value) => {
         if (!value) return false;
         const domainPart = value.split("@")[1];
-        const validDomains = ["com", "net", "org", "edu", "gov", "mil","lk"];
+        const validDomains = ["com", "net", "org", "edu", "gov", "mil", "lk"];
         const domainExtension = domainPart.split(".").pop();
         return validDomains.includes(domainExtension);
       }),
@@ -114,7 +114,7 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
       .test("is-valid-domain", "Email domain must be valid", (value) => {
         if (!value) return false;
         const domainPart = value.split("@")[1];
-        const validDomains = ["com", "net", "org", "edu", "gov", "mil","lk"];
+        const validDomains = ["com", "net", "org", "edu", "gov", "mil", "lk"];
         const domainExtension = domainPart.split(".").pop();
         return validDomains.includes(domainExtension);
       }),
@@ -157,7 +157,7 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
   };
 
   const handleTradeUnionNameChange = async (data) => {
-    if (data === '') {
+    if (data === "") {
       setNameVisibility(false);
       return;
     }
@@ -177,27 +177,29 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
   };
   const onSubmit = async (data) => {
     console.log("This is the form data", data);
-  
-   
-    const formattedDate = data.establishmentDate.toISOString().split('T')[0]; // Convert to 'YYYY-MM-DD' format
-  
+
+    const formattedDate = data.establishmentDate.toISOString().split("T")[0]; // Convert to 'YYYY-MM-DD' format
+
     // Prepare data to be sent to the backend
     const payload = {
       ...data,
       establishmentDate: formattedDate,
     };
-  
+
     // Perform API call
     try {
-      const response = await axios.post("http://localhost:8085/submitForm", payload);
-      const isSuccess = response.data.success; // Expecting  true or false 
+      const response = await axios.post(
+        "http://localhost:8085/submitForm",
+        payload
+      );
+      const isSuccess = response.data.success; // Expecting  true or false
       console.log("Response from backend:", isSuccess);
-  
+
       if (isSuccess) {
         Swal.fire({
-          icon: 'success',
-          title: 'Form Submitted Successfully',
-          text: 'Your form has been submitted.',
+          icon: "success",
+          title: "Form Submitted Successfully",
+          text: "Your form has been submitted.",
           timer: 2000,
           showConfirmButton: false,
         }).then(() => {
@@ -205,30 +207,28 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
         });
       } else {
         Swal.fire({
-          icon: 'error',
-          title: 'Submission Failed',
-          text: 'There was an issue submitting your form.',
+          icon: "error",
+          title: "Submission Failed",
+          text: "There was an issue submitting your form.",
         });
       }
     } catch (error) {
       console.error("Error submitting form data:", error);
       Swal.fire({
-        icon: 'error',
-        title: 'Submission Error',
-        text: 'An error occurred while submitting your form.',
+        icon: "error",
+        title: "Submission Error",
+        text: "An error occurred while submitting your form.",
       });
     }
-  
+
     setNameVisibility(false);
-  
+
     if (data.file) {
       const file = data.file;
       console.log("File selected:", file.name);
     }
   };
-  
-  
-  
+
   return (
     <Box width={"100%"}>
       <Typography variant="body1" align="center">
@@ -259,9 +259,13 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
             />
             {nameVisibility &&
               (nameState ? (
-                <Typography variant="caption" color={'error'}>Trade union name is not available</Typography>
+                <Typography variant="caption" color={"error"}>
+                  Trade union name is not available
+                </Typography>
               ) : (
-                <Typography variant="caption" color={'green'}>Trade union name is available</Typography>
+                <Typography variant="caption" color={"green"}>
+                  Trade union name is available
+                </Typography>
               ))}
 
             <FormLabel align="left">Address</FormLabel>
@@ -303,6 +307,16 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1-content"
               id="panel1-header"
+              sx={{
+                backgroundColor: "#31bdeb38", // Light blue background color
+                color: "blue", // Blue text color
+                "& .MuiAccordionSummary-expandIcon": {
+                  color: "blue", // Change the expand icon color to match
+                },
+                "& .MuiTypography-root": {
+                  color: "blue", // Ensure the title text color is blue
+                },
+              }}
             >
               President
             </AccordionSummary>
@@ -417,6 +431,16 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1-content"
               id="panel1-header"
+              sx={{
+                backgroundColor: "#31bdeb38", // Light blue background color
+                color: "blue", // Blue text color
+                "& .MuiAccordionSummary-expandIcon": {
+                  color: "blue", // Change the expand icon color to match
+                },
+                "& .MuiTypography-root": {
+                  color: "blue", // Ensure the title text color is blue
+                },
+              }}
             >
               Secretary
             </AccordionSummary>
@@ -530,6 +554,16 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1-content"
               id="panel1-header"
+              sx={{
+                backgroundColor: "#31bdeb38", // Light blue background color
+                color: "blue", // Blue text color
+                "& .MuiAccordionSummary-expandIcon": {
+                  color: "blue", // Change the expand icon color to match
+                },
+                "& .MuiTypography-root": {
+                  color: "blue", // Ensure the title text color is blue
+                },
+              }}
             >
               Upload B form
             </AccordionSummary>
@@ -565,16 +599,17 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
               />
             </AccordionDetails>
           </Accordion>
-
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            // onClick={handleFileUpload}
-            // disabled={!file}
-          >
-            Submit
-          </Button>
+          <Box display={"flex"} justifyContent={"left"}>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              // onClick={handleFileUpload}
+              // disabled={!file}
+            >
+              Submit
+            </Button>
+          </Box>
         </form>
       </Box>
     </Box>
