@@ -21,7 +21,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -57,8 +57,6 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
   const schema = yup.object().shape({
     name: yup.string().required("Name is required"),
     name2: yup.string().required("Name is required"),
-    userRole: yup.array().min(1, "At least one role must be selected"),
-
     nic: yup
       .string()
       .required()
@@ -75,18 +73,6 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
       .required("Username is required")
       .min(3, "Username must be at least 3 characters")
       .notOneOf(existingUsernames, "Username already exists"),
-    password: yup
-      .string()
-      .min(5, "Password must be at least 5 characters")
-      .max(15, "Password cannot exceed 10 characters")
-      .required("Password is required")
-      .matches(
-        /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{5,10})/,
-        "Password must include at least one uppercase letter and one symbol (!@#$%^&*)"
-      ),
-    confirmpassword: yup
-      .string()
-      .oneOf([yup.ref("password"), null], "Passwords must match"),
     email: yup
       .string()
       .required("Email is required")
@@ -109,6 +95,8 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
       phoneNumber4: phoneNumberValidation,
     }),
     address: yup.string().required("Address is required"),
+    file: yup.mixed().required("File is required"),
+    establishmentDate: yup.date().required("Date of Establishment is required"),
   });
 
   const {
@@ -117,6 +105,7 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
     reset,
     formState: { errors },
     setValue,
+    control,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -137,7 +126,9 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
     }
   };
 
-  const onSubmit = () => {};
+  const onSubmit = async (data) => {
+    console.log("This is the form data", data);
+  };
   return (
     <Box width={"100%"}>
       <Typography variant="body1" align="center">
@@ -179,9 +170,25 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
             <FormLabel align="left">
               Date of Establishment of Trade Union
             </FormLabel>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker size="small" />
-            </LocalizationProvider>
+            <Controller
+              name="establishmentDate"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      {...field}
+                      onChange={(value) => field.onChange(value)}
+                    />
+                  </LocalizationProvider>
+                  {errors.establishmentDate && (
+                    <FormHelperText error>
+                      {errors.establishmentDate.message}
+                    </FormHelperText>
+                  )}
+                </>
+              )}
+            />
           </Box>
           {/* Accordian starting from here -Accordian 1*/}
           <Accordion>
@@ -429,7 +436,20 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
               }}
             >
               <FormLabel align="left">Upload B -Form</FormLabel>
-              <TextField type="file" onChange={handleFileChange} />
+              <Controller
+                name="file"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <TextField type="file" onChange={(event)=>handleFileChange(event)} />
+                    {errors.file && (
+                      <FormHelperText error>
+                        {errors.file.message}
+                      </FormHelperText>
+                    )}
+                  </>
+                )}
+              />
             </AccordionDetails>
           </Accordion>
 
