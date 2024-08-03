@@ -98,7 +98,7 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
       .test("is-valid-domain", "Email domain must be valid", (value) => {
         if (!value) return false;
         const domainPart = value.split("@")[1];
-        const validDomains = ["com", "net", "org", "edu", "gov", "mil"];
+        const validDomains = ["com", "net", "org", "edu", "gov", "mil","lk"];
         const domainExtension = domainPart.split(".").pop();
         return validDomains.includes(domainExtension);
       }),
@@ -113,7 +113,7 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
       .test("is-valid-domain", "Email domain must be valid", (value) => {
         if (!value) return false;
         const domainPart = value.split("@")[1];
-        const validDomains = ["com", "net", "org", "edu", "gov", "mil"];
+        const validDomains = ["com", "net", "org", "edu", "gov", "mil","lk"];
         const domainExtension = domainPart.split(".").pop();
         return validDomains.includes(domainExtension);
       }),
