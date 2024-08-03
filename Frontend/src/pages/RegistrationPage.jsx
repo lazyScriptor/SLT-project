@@ -9,6 +9,7 @@ import RightUpperComp from "../subcomponents/RightUpperComp";
 
 import MainHeader from "../subcomponents/headers/MainHeader";
 import MainFooter from "../subcomponents/footers/MainFooter";
+import BottomFooter from "../subcomponents/footers/BottomFooter";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -66,6 +67,7 @@ export default function RegistrationForm() {
         height={"40vh"}
       >
         <MainFooter />
+        <BottomFooter/>
       </Box>
     </Box>
   );

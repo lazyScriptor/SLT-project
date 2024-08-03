@@ -8,35 +8,45 @@ function MainFooter() {
   return (
     <Box
       sx={{
-        height: "100%",
-        mt: 2, // Margin-top
-        width: "100%", // Full width
+        height: "auto",
+        mt: 20,
+        width: "100%",
         display: "flex",
-        justifyContent: "center", // Center horizontally
-        alignItems: "center", // Center vertically (if needed)
+        justifyContent: "center",
+        alignItems: "center",
         backgroundImage: `url(${backgroundImg})`,
-        backgroundSize: "cover", // Cover the entire box
-        backgroundRepeat: "no-repeat", // Do not repeat the image
-        backgroundPosition: "center", // Center the image
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
       }}
     >
       <Grid
         container
-        spacing={4} // Increase spacing between items
+        spacing={4}
         sx={{
           height: "100%",
-          width: "100%", // Adjust width as needed
-          maxWidth: "1200px", // Max width to prevent stretching
-          flexDirection: "row", // Stack items vertically
-          alignItems: "start", // Center content horizontally
+          width: "100%",
+          flexDirection: "row",
+          alignItems: "start",
           justifyContent: "center",
         }}
       >
         <Grid item xs={12} sm={6} md={4} lg={2} sx={{ textAlign: "left" }}>
-          <Typography variant="h6" color="white" gutterBottom>
+          <Typography
+            variant="h6"
+            color="white"
+            gutterBottom
+            sx={{
+              backgroundColor: "#9e9e9e30",
+              padding: "8px",
+              borderLeft: "2px solid #9e9e9e", // Add a left border
+              borderRadius: "0px 10px 0px 10px",
+            }}
+          >
             Contact info
           </Typography>
-          <Typography variant="caption" color="white">
+
+          <Typography variant="caption" color="#bebebe">
             Labour Secretariant
             <br />
             Colombo 05
@@ -58,7 +68,7 @@ function MainFooter() {
           <Typography variant="h6" color="white" gutterBottom>
             Related Links
           </Typography>
-          <Typography variant="caption" color="white">
+          <Typography variant="caption" color="#bebebe">
             Ministry of Labour and Foreign
             <br />
             Employement
@@ -80,7 +90,7 @@ function MainFooter() {
           <Typography variant="h6" color="white" gutterBottom>
             Quick Links
           </Typography>
-          <Typography variant="caption" color="white">
+          <Typography variant="caption" color="#bebebe">
             Home
             <br />
             About Labour Department
@@ -108,8 +118,8 @@ function MainFooter() {
             display: "flex",
             justifyContent: "center",
             flexDirection: "column",
-            alignItems:"center",
-            gap:1
+            alignItems: "center",
+            gap: 1,
           }}
         >
           <img src={sltQr} width={"100px"} alt="QR Code" />
