@@ -12,7 +12,7 @@ import {
   Paper,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-
+import axios from "axios";
 import Accordion from "@mui/material/Accordion";
 import AccordionActions from "@mui/material/AccordionActions";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -152,6 +152,17 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
     }
   };
 
+  const handleTradeUnionNameChange = async (data) => {
+    console.log(data);
+    try {
+      const response = await axios.get("http://localhost:8085/getTradeUnionName", {
+        params: { name: data },
+      });
+      console.log("front end axios response", response.data);
+    } catch (error) {
+      console.log("This is the error occurred in the front end", error);
+    }
+  };
   const onSubmit = async (data) => {
     console.log("This is the form data", data);
     if (data.file) {
@@ -182,6 +193,7 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
               id="outlined-size-small"
               placeholder="Enter name of the Trade Union"
               size="small"
+              onChange={(e) => handleTradeUnionNameChange(e.target.value)}
               inputProps={{ ...register("username") }}
               error={!!errors.username}
               helperText={errors.username?.message}

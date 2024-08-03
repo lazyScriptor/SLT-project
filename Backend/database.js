@@ -12,3 +12,12 @@ const pool = mysql
   })
   .promise();
 // const port = process.env.PORT || 8085;
+export async function getTradeUnionName(data) {
+    console.log(data.name);
+    const [names] = await pool.query("SELECT t_id FROM trade_unions WHERE t_trade_union_name = ?", [data.name]);
+    if(names.length>0){
+        return true
+    }else return false
+   
+  }
+  
