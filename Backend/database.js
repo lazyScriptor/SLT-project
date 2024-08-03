@@ -12,6 +12,7 @@ const pool = mysql
   })
   .promise();
 // const port = process.env.PORT || 8085;
+//All the queries implemented to prevent the SQL injection attacks ,thats why query and the data called seperately
 export async function getTradeUnionName(data) {
   console.log(data.name);
   const [names] = await pool.query(
@@ -35,7 +36,7 @@ export async function insertFormData(data) {
     const values = [
       otherData.tradeunionname,
       otherData.address,
-      establishmentDate // Ensure this is in 'YYYY-MM-DD' format
+      establishmentDate // Ensure this is in correct format
     ];
   
     try {
