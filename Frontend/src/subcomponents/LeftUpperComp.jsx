@@ -59,7 +59,18 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
     name2: yup.string().required("Name is required"),
     nic: yup
       .string()
-      .required()
+      .required("NIC is required")
+      .transform((value) => value.trim())
+      .test("is-valid-nic", "Please enter a valid NIC number", (value) => {
+        if (!value) return false;
+        const nineDigitsAndV = /^[0-9]{9}v$/i;
+        const validFormatCheck = /^[1-9]\d{8,10}$/;
+        const twelveDigits = /^[0-9]{12}$/;
+        return nineDigitsAndV.test(value) || twelveDigits.test(value);
+      }),
+    nic2: yup
+      .string()
+      .required("NIC is required")
       .transform((value) => value.trim())
       .test("is-valid-nic", "Please enter a valid NIC number", (value) => {
         if (!value) return false;
@@ -74,6 +85,21 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
       .min(3, "Username must be at least 3 characters")
       .notOneOf(existingUsernames, "Username already exists"),
     email: yup
+      .string()
+      .required("Email is required")
+      .email("Enter a valid email address")
+      .matches(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "Email must follow the format: user@example.com"
+      )
+      .test("is-valid-domain", "Email domain must be valid", (value) => {
+        if (!value) return false;
+        const domainPart = value.split("@")[1];
+        const validDomains = ["com", "net", "org", "edu", "gov", "mil"];
+        const domainExtension = domainPart.split(".").pop();
+        return validDomains.includes(domainExtension);
+      }),
+    email2: yup
       .string()
       .required("Email is required")
       .email("Enter a valid email address")
@@ -128,6 +154,10 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
 
   const onSubmit = async (data) => {
     console.log("This is the form data", data);
+    if (data.file) {
+      const file = data.file;
+      console.log("File selected:", file.name);
+    }
   };
   return (
     <Box width={"100%"}>
@@ -347,9 +377,9 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
                       id="outlined-size-small"
                       placeholder="Enter NIC number"
                       size="small"
-                      inputProps={{ ...register("nic") }}
-                      error={!!errors.nic}
-                      helperText={errors.nic?.message}
+                      inputProps={{ ...register("nic2") }}
+                      error={!!errors.nic2}
+                      helperText={errors.nic2?.message}
                     />
                   </Item>
                 </Grid>
@@ -406,10 +436,10 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
                       id="outlined-size-small"
                       placeholder="Enter email address"
                       size="small"
-                      inputProps={{ ...register("email") }}
-                      error={!!errors.email}
+                      inputProps={{ ...register("email2") }}
+                      error={!!errors.email2}
                       email
-                      helperText={errors.email?.message}
+                      helperText={errors.email2?.message}
                     />
                   </Item>
                 </Grid>
@@ -441,7 +471,13 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
                 control={control}
                 render={({ field }) => (
                   <>
-                    <TextField type="file" onChange={(event)=>handleFileChange(event)} />
+                    <TextField
+                      type="file"
+                      onChange={(e) => {
+                        field.onChange(e.target.files[0]);
+                        handleFileChange(e); // To update the local state for file upload
+                      }}
+                    />
                     {errors.file && (
                       <FormHelperText error>
                         {errors.file.message}
