@@ -39,6 +39,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
   const [nameState, setNameState] = useState(false);
   const [nameVisibility, setNameVisibility] = useState(false);
+  //created a seperate yup to use at 4 phonenumber fields
   const phoneNumberValidation = yup
     .string()
     .required("Phone number is required")
@@ -177,7 +178,7 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
   const onSubmit = async (data) => {
     console.log("This is the form data", data);
   
-    // Convert establishmentDate to ISO string
+   
     const formattedDate = data.establishmentDate.toISOString().split('T')[0]; // Convert to 'YYYY-MM-DD' format
   
     // Prepare data to be sent to the backend
@@ -186,10 +187,10 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
       establishmentDate: formattedDate,
     };
   
-    // Perform API call to send data to backend
+    // Perform API call
     try {
       const response = await axios.post("http://localhost:8085/submitForm", payload);
-      const isSuccess = response.data.success; // Expecting { success: true } or { success: false }
+      const isSuccess = response.data.success; // Expecting  true or false 
       console.log("Response from backend:", isSuccess);
   
       if (isSuccess) {
@@ -197,10 +198,10 @@ export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
           icon: 'success',
           title: 'Form Submitted Successfully',
           text: 'Your form has been submitted.',
-          timer: 2000, // Optional: time in milliseconds before auto-close
-          showConfirmButton: false, // Optional: hide the confirm button
+          timer: 2000,
+          showConfirmButton: false,
         }).then(() => {
-          window.location.reload(); // Refresh the page
+          window.location.reload();
         });
       } else {
         Swal.fire({

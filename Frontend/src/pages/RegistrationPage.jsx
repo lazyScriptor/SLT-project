@@ -31,7 +31,7 @@ export default function RegistrationForm() {
       <Box sx={{ width: "70vw" }}>
         <Grid container spacing={2}>
           <Grid item xs={12} lg={12}>
-            <Item>
+            <Item elevation={0}>
               <Typography variant="h4" color={"black"}>
                 APPLICATION FOR REGISTRATION OF TRADE UNIONS
               </Typography>{" "}
@@ -42,7 +42,10 @@ export default function RegistrationForm() {
             </Item>
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
-            <Item sx={{ display: "flex", justifyContent: "left" }}>
+            <Item
+              elevation={0}
+              sx={{ display: "flex", justifyContent: "left" }}
+            >
               <LeftUpperComp />
             </Item>
           </Grid>
