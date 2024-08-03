@@ -20,6 +20,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import Swal from 'sweetalert2';
 
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -35,7 +36,9 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function LeftUpperComp({ existingUsernames = [""] }) {
+export default function LeftUpperComp({ existingtradeunionnames = [""] }) {
+  const [nameState, setNameState] = useState(false);
+  const [nameVisibility, setNameVisibility] = useState(false);
   const phoneNumberValidation = yup
     .string()
     .required("Phone number is required")
@@ -79,11 +82,11 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
         const twelveDigits = /^[0-9]{12}$/;
         return nineDigitsAndV.test(value) || twelveDigits.test(value);
       }),
-    username: yup
+    tradeunionname: yup
       .string()
-      .required("Username is required")
-      .min(3, "Username must be at least 3 characters")
-      .notOneOf(existingUsernames, "Username already exists"),
+      .required("tradeunionname is required")
+      .min(3, "tradeunionname must be at least 3 characters")
+      .notOneOf(existingtradeunionnames, "tradeunionname already exists"),
     email: yup
       .string()
       .required("Email is required")
@@ -153,23 +156,78 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
   };
 
   const handleTradeUnionNameChange = async (data) => {
-    console.log(data);
+    if (data === '') {
+      setNameVisibility(false);
+      return;
+    }
     try {
-      const response = await axios.get("http://localhost:8085/getTradeUnionName", {
-        params: { name: data },
-      });
+      const response = await axios.get(
+        "http://localhost:8085/getTradeUnionName",
+        {
+          params: { name: data },
+        }
+      );
       console.log("front end axios response", response.data);
+      setNameVisibility(true);
+      setNameState(response.data);
     } catch (error) {
       console.log("This is the error occurred in the front end", error);
     }
   };
   const onSubmit = async (data) => {
     console.log("This is the form data", data);
+  
+    // Convert establishmentDate to ISO string
+    const formattedDate = data.establishmentDate.toISOString().split('T')[0]; // Convert to 'YYYY-MM-DD' format
+  
+    // Prepare data to be sent to the backend
+    const payload = {
+      ...data,
+      establishmentDate: formattedDate,
+    };
+  
+    // Perform API call to send data to backend
+    try {
+      const response = await axios.post("http://localhost:8085/submitForm", payload);
+      const isSuccess = response.data.success; // Expecting { success: true } or { success: false }
+      console.log("Response from backend:", isSuccess);
+  
+      if (isSuccess) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Form Submitted Successfully',
+          text: 'Your form has been submitted.',
+          timer: 2000, // Optional: time in milliseconds before auto-close
+          showConfirmButton: false, // Optional: hide the confirm button
+        }).then(() => {
+          window.location.reload(); // Refresh the page
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Submission Failed',
+          text: 'There was an issue submitting your form.',
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting form data:", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Submission Error',
+        text: 'An error occurred while submitting your form.',
+      });
+    }
+  
+    setNameVisibility(false);
+  
     if (data.file) {
       const file = data.file;
       console.log("File selected:", file.name);
     }
   };
+  
+  
+  
   return (
     <Box width={"100%"}>
       <Typography variant="body1" align="center">
@@ -194,10 +252,16 @@ export default function LeftUpperComp({ existingUsernames = [""] }) {
               placeholder="Enter name of the Trade Union"
               size="small"
               onChange={(e) => handleTradeUnionNameChange(e.target.value)}
-              inputProps={{ ...register("username") }}
-              error={!!errors.username}
-              helperText={errors.username?.message}
+              inputProps={{ ...register("tradeunionname") }}
+              error={!!errors.tradeunionname}
+              helperText={errors.tradeunionname?.message}
             />
+            {nameVisibility &&
+              (nameState ? (
+                <Typography variant="caption" color={'error'}>Trade union name is not available</Typography>
+              ) : (
+                <Typography variant="caption" color={'green'}>Trade union name is available</Typography>
+              ))}
 
             <FormLabel align="left">Address</FormLabel>
             <TextField
